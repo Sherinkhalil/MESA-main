@@ -6,8 +6,10 @@ def read_integer_between_numbers(prompt, mini, maximum):
                 return users_input
             else:
                 print(f"Numbers from {mini} to {maximum} only.")
+                raise ValueError
+            break
         except ValueError:
-            print("Sorry numbers only please")
+            print("Sorry Enter number between 1 to 7 ")
 
 
 def read_nonempty_string(prompt):
@@ -240,28 +242,32 @@ def main():
            "\n6. Show all competitors who have won a race \n7. Show all competitors who have not taken a podium-position in any race.\n8. Quit \n>>> "
     input_menu = read_integer_between_numbers(MENU, 1, 8)
 
-    while input_menu != 8:
-        if input_menu == 1:
-            id, time_taken, venue = race_results(races_location)
-            fastest_runner = winner_of_race(id, time_taken)
-            display_races(id, time_taken, venue, fastest_runner)
-        elif input_menu == 2:
-            users_venue(races_location, runners_id)
-        elif input_menu == 3:
-            competitors_by_county(runners_name, runners_id)
-        elif input_menu == 4:
-            displaying_winners_of_each_race(races_location)
-        elif input_menu == 5:
-            runner, id = relevant_runner_info(runners_name, runners_id)
-            displaying_race_times_one_competitor(races_location, runner, id)
-        elif input_menu == 6:
-            displaying_runners_who_have_won_at_least_one_race(
-                races_location, runners_name, runners_id)
-        elif input_menu == 7:
-            displaying_runners_who_have_not_won_at_least_one_race(races_location, runners_name, runners_id)
-        print()
-        input_menu = read_integer_between_numbers(MENU, 1, 8)
-    updating_races_file(races_location)
+    while True:
+        try:
+            if input_menu == 1:
+                id, time_taken, venue = race_results(races_location)
+                fastest_runner = winner_of_race(id, time_taken)
+                display_races(id, time_taken, venue, fastest_runner)
+            elif input_menu == 2:
+                users_venue(races_location, runners_id)
+            elif input_menu == 3:
+                competitors_by_county(runners_name, runners_id)
+            elif input_menu == 4:
+                displaying_winners_of_each_race(races_location)
+            elif input_menu == 5:
+                runner, id = relevant_runner_info(runners_name, runners_id)
+                displaying_race_times_one_competitor(races_location, runner, id)
+            elif input_menu == 6:
+                displaying_runners_who_have_won_at_least_one_race(
+                    races_location, runners_name, runners_id)
+            elif input_menu == 7:
+                displaying_runners_who_have_not_won_at_least_one_race(races_location, runners_name, runners_id)
+            print()
+            input_menu = read_integer_between_numbers(MENU, 1, 8)
+            updating_races_file(races_location)
+            break
+        except ValueError:
+            print("Please Enter Number Only!")
 
 
 if __name__ == "__main__":
